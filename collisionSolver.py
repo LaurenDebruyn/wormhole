@@ -11,8 +11,11 @@ class CollissionSolver:
         self.player = player_arg
 
     def collision_detection_player_square(self, obstacle):
-        return obstacle.x - self.player.width < self.player.x < obstacle.x + obstacle.width and \
-               obstacle.y - self.player.height < self.player.y < obstacle.y + obstacle.height
+        for segment in self.player.get_segments():
+            if obstacle.x - segment.width < segment.x < obstacle.x + obstacle.width and \
+                   obstacle.y - segment.height < segment.y < obstacle.y + obstacle.height:
+                return True
+        return False
 
     def collision_detection(self):
         for obstacle in self.obstacles:
